@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import type { Metadata } from "next";
-import { getPostBySlug, getPosts } from "@/lib/hashnode";
+import { getPostBySlug, getAllPosts } from "@/lib/hashnode";
 
 export const revalidate = 3600;
 
@@ -29,8 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const postsData = await getPosts(50);
-  const posts = postsData?.edges || [];
+  const posts = await getAllPosts();
 
   return posts.map(({ node }: any) => ({
     slug: node.slug,

@@ -57,6 +57,24 @@ export async function getPosts(first = 10, after?: string) {
   return data.publication.posts;
 }
 
+export async function getAllPosts() {
+  let allEdges: any[] = [];
+  let hasNextPage = true;
+  let endCursor: string | undefined = undefined;
+
+  while (hasNextPage) {
+    const postsData = await getPosts(50, endCursor);
+    if (postsData?.edges) {
+      allEdges = [...allEdges, ...postsData.edges];
+    }
+    
+    hasNextPage = postsData?.pageInfo?.hasNextPage;
+    endCursor = postsData?.pageInfo?.endCursor;
+  }
+
+  return allEdges;
+}
+
 export async function getPostBySlug(slug: string) {
   const query = gql`
     query GetPostBySlug($slug: String!, $host: String!) {
