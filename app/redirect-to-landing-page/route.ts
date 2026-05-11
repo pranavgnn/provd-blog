@@ -1,9 +1,6 @@
-export const runtime = "edge";
-
 export async function GET(request: Request) {
   try {
     let landingPageUrl = process.env.LANDING_PAGE_URL || "https://provd.in";
-    landingPageUrl = landingPageUrl.replace(/^["']|["']$/g, "");
 
     const url = new URL(request.url);
     const article = url.searchParams.get("article");
