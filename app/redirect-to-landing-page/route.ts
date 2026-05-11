@@ -1,19 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
-
 export const runtime = "edge";
 
-export async function GET(request: NextRequest) {
-  const landingPageUrl = process.env.LANDING_PAGE_URL!;
-  const { searchParams } = new URL(request.url);
-  const article = searchParams.get("article");
+export async function GET(request: Request) {
+  try {
+    let landingPageUrl = process.env.LANDING_PAGE_URL || "https://provd.in";
+    landingPageUrl = landingPageUrl.replace(/^["']|["']$/g, "");
 
-  const redirectUrl = new URL(landingPageUrl);
-  redirectUrl.searchParams.set("utm_source", "blog");
+    const url = new URL(request.url);
+    const article = url.searchParams.get("article");
 
-  if (article) {
-    redirectUrl.searchParams.set("utm_campaign", article);
+    const redirectUrl = new URL(landingPageUrl);
+    redirectUrl.searchParams.set("utm_source", "blog");
+
+    if (article) {
+      redirectUrl.searchParams.set("utm_campaign", article);
+    }
+
+    return Response.redirect(redirectUrl.toString(), 302);
+  } catch (error) {
+    return Response.redirect("https://provd.in/?utm_source=blog_fallback", 302);
   }
-
-  return NextResponse.redirect(redirectUrl.toString());
 }
-
