@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { format } from "date-fns";
 import type { Metadata } from "next";
 import { getPostBySlug, getPosts } from "@/lib/hashnode";

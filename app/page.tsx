@@ -1,10 +1,18 @@
+import Link from "next/link";
 import { getPosts } from "@/lib/hashnode";
 import { PostCard } from "@/components/PostCard";
 
 export const revalidate = 3600; // revalidate at most every hour
 
-export default async function Home() {
-  const postsData = await getPosts(10);
+interface Props {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function Home({ searchParams }: Props) {
+  const resolvedSearchParams = await searchParams;
+  const after = typeof resolvedSearchParams.after === 'string' ? resolvedSearchParams.after : undefined;
+
+  const postsData = await getPosts(10, after);
   const posts = postsData?.edges || [];
 
   return (
@@ -28,12 +36,14 @@ export default async function Home() {
         )}
       </div>
       
-      {/* Basic Pagination Link (Placeholder for real pagination) */}
       {postsData?.pageInfo?.hasNextPage && (
         <div className="mt-16 text-center">
-          <button className="px-8 py-4 bg-ink-navy text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-jade-green">
+          <Link 
+            href={`/?after=${postsData.pageInfo.endCursor}`}
+            className="inline-block px-8 py-4 bg-ink-navy text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-jade-green"
+          >
             Load More
-          </button>
+          </Link>
         </div>
       )}
     </main>
