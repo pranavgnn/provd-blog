@@ -3,8 +3,6 @@ import { format } from "date-fns";
 import type { Metadata } from "next";
 import { getPostBySlug, getPosts } from "@/lib/hashnode";
 
-import { LinkInterceptor } from "@/components/LinkInterceptor";
-
 export const revalidate = 3600;
 
 interface Props {
@@ -47,10 +45,29 @@ export default async function BlogPost({ params }: Props) {
     notFound();
   }
 
+  const processedHtml = post.content.html.replace(
+    /href="([^"]*provd\.in[^"]*)"/g,
+    (match, urlString) => {
+      if (urlString.includes("blog.provd.in")) {
+        return match;
+      }
+      try {
+        const url = new URL(urlString);
+        if (!url.searchParams.has("utm_source")) {
+          url.searchParams.set("utm_source", "blog");
+          url.searchParams.set("utm_campaign", resolvedParams.slug);
+          return `href="${url.toString()}"`;
+        }
+      } catch (e) {
+        // Ignore invalid URLs
+      }
+      return match;
+    }
+  );
+
   return (
     <main className="container mx-auto px-6 py-12 md:py-16 max-w-4xl w-full flex-1">
       <article>
-        <LinkInterceptor slug={resolvedParams.slug} />
         <header className="mb-10 text-center flex flex-col items-center">
           <time className="text-sm text-jade-green font-bold uppercase tracking-wider mb-4">
             {format(new Date(post.publishedAt), "MMMM d, yyyy")}
@@ -71,7 +88,7 @@ export default async function BlogPost({ params }: Props) {
 
         <div 
           className="prose prose-lg prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-ink-navy prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-2 prose-ol:my-2 prose-li:my-0 [&_a]:text-jade-green [&_a:hover]:text-ink-navy [&_a]:transition-colors prose-img:border prose-img:border-gray-200"
-          dangerouslySetInnerHTML={{ __html: post.content.html }}
+          dangerouslySetInnerHTML={{ __html: processedHtml }}
         />
       </article>
     </main>
