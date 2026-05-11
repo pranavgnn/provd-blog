@@ -1,6 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function Footer() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const article = !isHome && pathname ? pathname.replace(/^\//, '') : '';
+  const redirectUrl = `/redirect-to-landing-page${article ? `?article=${article}` : ''}`;
+
   return (
     <footer className="bg-ink-navy text-white py-16 md:py-24 border-t-8 border-jade-green w-full mt-12 md:mt-24">
       <div className="container mx-auto px-6 max-w-6xl">
@@ -19,7 +27,7 @@ export function Footer() {
           
           <div className="flex flex-col items-start md:items-end gap-6">
             <a 
-              href="/redirect-to-landing-page" 
+              href={redirectUrl} 
               className="px-8 py-4 bg-jade-green text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-white hover:text-ink-navy"
             >
               Try Provd
@@ -33,7 +41,7 @@ export function Footer() {
           </div>
           <div className="flex gap-6">
             <Link href="/" className="hover:text-white transition-colors">Blog</Link>
-            <a href="/redirect-to-landing-page" className="hover:text-white transition-colors">Main Site</a>
+            <a href={redirectUrl} className="hover:text-white transition-colors">Main Site</a>
           </div>
         </div>
       </div>

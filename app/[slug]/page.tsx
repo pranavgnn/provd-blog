@@ -3,6 +3,8 @@ import { format } from "date-fns";
 import type { Metadata } from "next";
 import { getPostBySlug, getPosts } from "@/lib/hashnode";
 
+import { LinkInterceptor } from "@/components/LinkInterceptor";
+
 export const revalidate = 3600;
 
 interface Props {
@@ -48,6 +50,7 @@ export default async function BlogPost({ params }: Props) {
   return (
     <main className="container mx-auto px-6 py-12 md:py-16 max-w-4xl w-full flex-1">
       <article>
+        <LinkInterceptor slug={resolvedParams.slug} />
         <header className="mb-10 text-center flex flex-col items-center">
           <time className="text-sm text-jade-green font-bold uppercase tracking-wider mb-4">
             {format(new Date(post.publishedAt), "MMMM d, yyyy")}
