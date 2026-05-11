@@ -21,7 +21,7 @@ export default async function Home({ searchParams }: Props) {
         <h1 className="text-3xl md:text-5xl font-heading font-bold text-ink-navy mb-4">
           Insights & Updates
         </h1>
-        <p className="text-xl text-slate-gray max-w-2xl mx-auto md:mx-0">
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto md:mx-0">
           Read our latest thoughts on technology, product development, and the future of startups.
         </p>
       </div>
@@ -32,7 +32,7 @@ export default async function Home({ searchParams }: Props) {
             <PostCard key={node.id} post={node} />
           ))
         ) : (
-          <p className="text-lg text-slate-gray col-span-full text-center py-10">No posts found yet.</p>
+          <p className="text-lg text-muted-foreground col-span-full text-center py-10">No posts found yet.</p>
         )}
       </div>
       
@@ -40,6 +40,7 @@ export default async function Home({ searchParams }: Props) {
         <div className="mt-16 text-center">
           <Link 
             href={`/?after=${postsData.pageInfo.endCursor}`}
+            rel="nofollow"
             className="inline-block px-8 py-4 bg-ink-navy text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-jade-green"
           >
             Load More

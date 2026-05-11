@@ -16,6 +16,7 @@ export function Logo({ className }: LogoProps) {
   return (
     <a 
       href={redirectUrl} 
+      rel="nofollow"
       aria-label="Provd Home" 
       className={cn(
         "font-heading font-bold text-secondary italic hover:opacity-80 transition-opacity text-2xl tracking-widest",

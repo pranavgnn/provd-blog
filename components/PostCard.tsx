@@ -8,9 +8,9 @@ interface PostCardProps {
 
 export function PostCard({ post }: PostCardProps) {
   return (
-    <article className="flex flex-col gap-4 border-b border-gray-200 pb-8 last:border-0 last:pb-0">
+    <article className="flex flex-col gap-4 border-b border-border pb-8 last:border-0 last:pb-0">
       {post.coverImage && (
-        <Link href={`/${post.slug}`} className="block overflow-hidden w-full aspect-[2/1] relative bg-gray-100">
+        <Link href={`/${post.slug}`} className="block overflow-hidden w-full aspect-[2/1] relative bg-muted/30">
           <img 
             src={post.coverImage.url} 
             alt={post.title}
@@ -19,7 +19,7 @@ export function PostCard({ post }: PostCardProps) {
         </Link>
       )}
       <div className="flex flex-col gap-2">
-        <time className="text-sm text-slate-gray font-medium uppercase tracking-wider">
+        <time className="text-sm text-muted-foreground font-medium uppercase tracking-wider">
           {format(new Date(post.publishedAt), 'MMMM d, yyyy')}
         </time>
         <Link href={`/${post.slug}`} className="group">
@@ -27,7 +27,7 @@ export function PostCard({ post }: PostCardProps) {
             {post.title}
           </h2>
         </Link>
-        <p className="text-lg text-slate-gray line-clamp-3 leading-relaxed">
+        <p className="text-lg text-muted-foreground line-clamp-3 leading-relaxed">
           {post.brief}
         </p>
       </div>

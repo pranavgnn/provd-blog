@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://blog.provd.in"),
   title: "Provd Blog",
   description: "Read the latest updates from Provd.",
+  icons: {
+    apple: "/favicon.ico", // Using favicon as fallback for apple-touch-icon
+  },
 };
 
 export default function RootLayout({

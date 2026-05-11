@@ -20,7 +20,7 @@ export function Footer() {
             >
               Provd
             </Link>
-            <p className="mt-4 text-slate-300 max-w-sm text-lg">
+            <p className="mt-4 text-muted-foreground/80 max-w-sm text-lg">
               Insights on technology, product development, and the future of startups in the rental market.
             </p>
           </div>
@@ -28,6 +28,7 @@ export function Footer() {
           <div className="flex flex-col items-start md:items-end gap-6">
             <a 
               href={redirectUrl} 
+              rel="nofollow"
               className="px-8 py-4 bg-jade-green text-white font-bold uppercase tracking-widest text-sm transition-all hover:bg-white hover:text-ink-navy"
             >
               Try Provd
@@ -35,7 +36,7 @@ export function Footer() {
           </div>
         </div>
         
-        <div className="pt-8 border-t border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold uppercase tracking-widest text-slate-300">
+        <div className="pt-8 border-t border-muted-foreground/20 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-bold uppercase tracking-widest text-muted-foreground/80">
           <div className="text-center md:text-left">
             &copy; {new Date().getFullYear()} Provd. Built for the Indian Rental Market.
           </div>

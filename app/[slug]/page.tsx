@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import type { Metadata } from "next";
 import { getPostBySlug, getAllPosts } from "@/lib/hashnode";
+import { SocialShare } from "@/components/SocialShare";
 
 export const revalidate = 3600;
 
@@ -75,7 +76,7 @@ export default async function BlogPost({ params }: Props) {
             {post.title}
           </h1>
           {post.coverImage && (
-            <div className="w-full aspect-video relative overflow-hidden bg-gray-100 mt-8">
+            <div className="w-full aspect-video relative overflow-hidden bg-muted/30 mt-8">
               <img 
                 src={post.coverImage.url} 
                 alt={post.title}
@@ -86,8 +87,12 @@ export default async function BlogPost({ params }: Props) {
         </header>
 
         <div 
-          className="prose prose-lg prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-ink-navy prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-2 prose-ol:my-2 prose-li:my-0 [&_a]:text-jade-green [&_a:hover]:text-ink-navy [&_a]:transition-colors prose-img:border prose-img:border-gray-200"
+          className="prose prose-lg prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-ink-navy prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-2 prose-ol:my-2 prose-li:my-0 [&_a]:text-jade-green [&_a:hover]:text-ink-navy [&_a]:transition-colors prose-img:border prose-img:border-border"
           dangerouslySetInnerHTML={{ __html: processedHtml }}
+        />
+        <SocialShare 
+          url={`https://blog.provd.in/${resolvedParams.slug}`} 
+          title={post.title} 
         />
       </article>
     </main>
