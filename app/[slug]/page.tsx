@@ -90,10 +90,18 @@ export default async function BlogPost({ params }: Props) {
           className="prose prose-lg prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-ink-navy prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-2 prose-ol:my-2 prose-li:my-0 [&_a]:text-jade-green [&_a:hover]:text-ink-navy [&_a]:transition-colors prose-img:border prose-img:border-border"
           dangerouslySetInnerHTML={{ __html: processedHtml }}
         />
-        <SocialShare
-          url={`https://blog.provd.in/${resolvedParams.slug}`}
-          title={post.title}
-        />
+
+        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-jade-green rotate-45" />
+            <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground/60">End of article</span>
+          </div>
+          
+          <SocialShare
+            url={`https://blog.provd.in/${resolvedParams.slug}`}
+            title={post.title}
+          />
+        </div>
       </article>
     </main>
   );

@@ -93,4 +93,47 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading text-ink-navy font-bold;
   }
+
+  /* FAQ / Details Styling in Blog Posts (Hashnode Raw HTML) */
+  .prose details {
+    @apply border-b border-border py-6 last:border-0;
+  }
+
+  /* Reset list styling if FAQ is inside a list */
+  .prose li:has(details) {
+    @apply list-none before:hidden ml-0 pl-0;
+  }
+
+  .prose summary {
+    @apply flex justify-between items-center cursor-pointer list-none text-ink-navy font-sans font-medium text-lg md:text-xl gap-4;
+  }
+
+  /* Force sans-serif even if Hashnode uses headings inside summary */
+  .prose summary * {
+    @apply font-sans font-medium text-ink-navy !m-0 !p-0 inline;
+  }
+
+  /* Hide default browser marker */
+  .prose summary::-webkit-details-marker,
+  .prose summary::marker {
+    display: none !important;
+  }
+
+  /* Add Plus/Minus icons via pseudo-elements - EXACT green from site */
+  .prose summary::after {
+    content: '+';
+    @apply text-jade-green text-3xl font-light transition-transform duration-200 leading-none ml-4 shrink-0;
+  }
+
+  .prose details[open] summary::after {
+    content: '−'; /* Proper minus character */
+  }
+
+  /* Target content inside details */
+  .prose details > div,
+  .prose details > p,
+  .prose details > ul,
+  .prose details > ol {
+    @apply mt-6 text-slate-gray leading-relaxed text-base md:text-lg pr-8 !mb-0;
+  }
 }

@@ -31,7 +31,7 @@ export function SocialShare({ url, title }: SocialShareProps) {
   ];
 
   return (
-    <div className="flex items-center gap-4 mt-12 py-6 border-y border-border">
+    <div className="flex items-center gap-4">
       <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
         Share this post:
       </span>
@@ -42,7 +42,7 @@ export function SocialShare({ url, title }: SocialShareProps) {
             href={link.href}
             target="_blank"
             rel="noopener noreferrer"
-            className={`transition-opacity ${link.color}`}
+            className={`transition-opacity ${link.color} flex items-center`}
             aria-label={`Share on ${link.name}`}
           >
             <img 
