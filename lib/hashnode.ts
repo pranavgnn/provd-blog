@@ -12,6 +12,11 @@ export interface PostNode {
     url: string;
   } | null;
   publishedAt: string;
+  updatedAt?: string;
+  author?: {
+    name: string;
+    profilePicture?: string | null;
+  } | null;
 }
 
 export interface PostDetails extends PostNode {
@@ -91,6 +96,11 @@ export async function getPostBySlug(slug: string) {
             url
           }
           publishedAt
+          updatedAt
+          author {
+            name
+            profilePicture
+          }
           content {
             html
           }

@@ -65,8 +65,39 @@ export default async function BlogPost({ params }: Props) {
     },
   );
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.seo?.description || post.brief,
+    "image": post.coverImage ? [post.coverImage.url] : [],
+    "datePublished": post.publishedAt,
+    "dateModified": post.updatedAt || post.publishedAt,
+    "author": {
+      "@type": "Person",
+      "name": post.author?.name || "Provd Team",
+      "image": post.author?.profilePicture || undefined
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Provd",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://blog.provd.in/favicon.ico"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://blog.provd.in/${resolvedParams.slug}`
+    }
+  };
+
   return (
     <main className="container mx-auto px-6 py-12 md:py-16 max-w-4xl w-full flex-1">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <article>
         <header className="mb-10 text-center flex flex-col items-center">
           <time className="text-sm text-jade-green font-bold uppercase tracking-wider mb-4">
