@@ -62,7 +62,7 @@ export default async function BlogPost({ params }: Props) {
         // Ignore invalid URLs
       }
       return match;
-    }
+    },
   );
 
   return (
@@ -77,8 +77,8 @@ export default async function BlogPost({ params }: Props) {
           </h1>
           {post.coverImage && (
             <div className="w-full aspect-video relative overflow-hidden bg-muted/30 mt-8">
-              <img 
-                src={post.coverImage.url} 
+              <img
+                src={post.coverImage.url}
                 alt={post.title}
                 className="object-cover w-full h-full"
               />
@@ -86,13 +86,13 @@ export default async function BlogPost({ params }: Props) {
           )}
         </header>
 
-        <div 
+        <div
           className="prose prose-lg prose-slate max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-ink-navy prose-headings:mt-8 prose-headings:mb-4 prose-ul:my-2 prose-ol:my-2 prose-li:my-0 [&_a]:text-jade-green [&_a:hover]:text-ink-navy [&_a]:transition-colors prose-img:border prose-img:border-border"
           dangerouslySetInnerHTML={{ __html: processedHtml }}
         />
-        <SocialShare 
-          url={`https://blog.provd.in/${resolvedParams.slug}`} 
-          title={post.title} 
+        <SocialShare
+          url={`https://blog.provd.in/${resolvedParams.slug}`}
+          title={post.title}
         />
       </article>
     </main>

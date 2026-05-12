@@ -1,7 +1,7 @@
 import { request, gql } from "graphql-request";
 
-const endpoint = "https://gql.hashnode.com/";
-const HOST = "provd.hashnode.dev";
+const ENDPOINT = process.env.HASHNODE_ENDPOINT!;
+const HOST = process.env.HASHNODE_HOST!;
 
 export interface PostNode {
   id: string;
@@ -18,10 +18,10 @@ export interface PostDetails extends PostNode {
   content: {
     html: string;
   };
-  seo: {
-    title: string;
-    description: string;
-  };
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+  } | null;
 }
 
 export async function getPosts(first = 10, after?: string) {
@@ -52,8 +52,10 @@ export async function getPosts(first = 10, after?: string) {
   `;
 
   const variables = { first, after, host: HOST };
-  const data: any = await request(endpoint, query, variables);
-  
+
+  const data: any = await request(ENDPOINT, query, variables);
+  if (!data?.publication) return null;
+
   return data.publication.posts;
 }
 
@@ -64,11 +66,12 @@ export async function getAllPosts() {
 
   while (hasNextPage) {
     const postsData = await getPosts(50, endCursor);
+
     if (postsData?.edges) {
       allEdges = [...allEdges, ...postsData.edges];
     }
-    
-    hasNextPage = postsData?.pageInfo?.hasNextPage;
+
+    hasNextPage = postsData?.pageInfo?.hasNextPage ?? false;
     endCursor = postsData?.pageInfo?.endCursor;
   }
 
@@ -101,7 +104,8 @@ export async function getPostBySlug(slug: string) {
   `;
 
   const variables = { slug, host: HOST };
-  const data: any = await request(endpoint, query, variables);
-  
+  const data: any = await request(ENDPOINT, query, variables);
+  if (!data?.publication?.post) return null;
+
   return data.publication.post as PostDetails;
 }
